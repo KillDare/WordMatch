@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <title>WordMatch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+
+<body>
+    <div class="app-shell">
+
+        <header class="topbar">
+            <a class="brand" href="#" id="btnBrand" aria-label="WordMatch">
+                <span class="brand-mark"><span id="logo-W">W</span><span id="logo-M">M</span></span>
+                <span class="brand-name">Word<span>Match</span></span>
+            </a>
+
+            <div class="topbar-actions">
+                <div class="language-pair" aria-label="Idiomas">
+                    <span id="sourceLanguageLabel">English</span>
+                    <span class="arrow">→</span>
+                    <span id="targetLanguageLabel">Portuguese</span>
+                </div>
+                <button class="icon-button" id="btnSettings" type="button" aria-label="Configurações">⚙</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="screen screen-active" id="screenHome">
+                <div class="hero">
+                    <div class="eyebrow">VOCABULÁRIO • PRÁTICA • MEMÓRIA</div>
+                    <h1>Conecte as palavras.<br><span>Aprenda naturalmente.</span></h1>
+                    <p class="hero-text">
+                        Encontre as traduções corretas e construa seu vocabulário
+                        enquanto joga.
+                    </p>
+
+                    <button class="primary-button" id="btnStart" type="button">
+                        <span>Começar partida</span>
+                        <strong>→</strong>
+                    </button>
+                </div>
+
+                <div class="home-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-label">COMO FUNCIONA</span>
+                            <h2>Faça as conexões</h2>
+                        </div>
+                        <span class="round-size-badge" id="homeRoundSize">5 pares</span>
+                    </div>
+
+                    <div class="how-grid">
+                        <div class="how-card">
+                            <span class="how-number">01</span>
+                            <h3>Escolha uma palavra</h3>
+                            <p>Selecione uma palavra no lado esquerdo.</p>
+                        </div>
+                        <div class="how-card">
+                            <span class="how-number">02</span>
+                            <h3>Encontre a tradução</h3>
+                            <p>Conecte-a à tradução correspondente.</p>
+                        </div>
+                        <div class="how-card">
+                            <span class="how-number">03</span>
+                            <h3>Complete a rodada</h3>
+                            <p>Faça todas as conexões antes do tempo acabar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-icon">◆</span>
+                        <div>
+                            <small>PALAVRAS</small>
+                            <strong id="statWords">—</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">★</span>
+                        <div>
+                            <small>PONTOS</small>
+                            <strong id="statScore">0</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">↗</span>
+                        <div>
+                            <small>MELHOR SEQUÊNCIA</small>
+                            <strong id="statStreak">0</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="screen" id="screenGame">
+                <div class="game-header">
+                    <button class="text-button" id="btnExitGame" type="button">← Sair</button>
+
+                    <div class="progress-info">
+                        <span>RODADA</span>
+                        <strong><span id="currentRound">1</span>/<span id="totalRounds">10</span></strong>
+                    </div>
+
+                    <div class="score-display">
+                        <span>PONTOS</span>
+                        <strong id="gameScore">0</strong>
+                    </div>
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-value" id="progressValue"></div>
+                </div>
+
+                <div class="game-intro">
+                    <span class="section-label">LIGUE OS PARES</span>
+                    <h1>Encontre as traduções</h1>
+                    <p>Selecione uma palavra e depois sua tradução.</p>
+                </div>
+
+                <div class="match-board" id="matchBoard">
+                    <div class="column">
+                        <div class="column-header">
+                            <span>ENGLISH</span>
+                            <small>PALAVRAS</small>
+                        </div>
+                        <div class="cards-list" id="sourceColumn"></div>
+                    </div>
+
+                    <div class="connection-gutter" aria-hidden="true">
+                        <span class="connection-dot"></span>
+                        <span class="connection-dot"></span>
+                        <span class="connection-dot"></span>
+                        <span class="connection-dot"></span>
+                        <span class="connection-dot"></span>
+                    </div>
+
+                    <div class="column">
+                        <div class="column-header">
+                            <span id="targetColumnTitle">PORTUGUESE</span>
+                            <small>TRADUÇÕES</small>
+                        </div>
+                        <div class="cards-list" id="targetColumn"></div>
+                    </div>
+                </div>
+
+                <div class="selection-status" id="selectionStatus" aria-live="polite">
+                    <span class="status-dot"></span>
+                    <span>Selecione uma palavra para começar.</span>
+                </div>
+
+                <div class="feedback" id="roundFeedback" aria-live="polite"></div>
+            </section>
+
+            <!-- RESULT -->
+            <section class="screen" id="screenResult">
+                <div class="result-card">
+                    <span class="section-label">RODADA CONCLUÍDA</span>
+                    <div class="result-icon">✓</div>
+                    <h1>Excelente trabalho!</h1>
+                    <p>Você completou todas as conexões.</p>
+
+                    <div class="final-score">
+                        <small>PONTUAÇÃO</small>
+                        <strong id="finalScore">0</strong>
+                    </div>
+
+                    <div class="result-stats">
+                        <div>
+                            <small>ACERTOS</small>
+                            <strong id="correctMatches">0</strong>
+                        </div>
+                        <div>
+                            <small>ERROS</small>
+                            <strong id="wrongMatches">0</strong>
+                        </div>
+                        <div>
+                            <small>TEMPO</small>
+                            <strong id="finalTime">0s</strong>
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="primary-button" id="btnPlayAgain" type="button">
+                            <span>Jogar novamente</span>
+                            <strong>↻</strong>
+                        </button>
+                        <button class="secondary-button" id="btnBackHome" type="button">
+                            Voltar ao início
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+
+            <div class="rodape-identidade">
+                <h2>Kildare Alves </h2>
+                <p> • Desenvolvedor Front-end</p>
+            </div>
+
+            <nav class="redes" aria-label="Redes sociais">
+                <a href="https://www.instagram.com/kildare_alves21/" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/kildare-alves-554208175" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/KillDare" aria-label="GitHub">
+                    <i class="fa-brands fa-github" aria-hidden="true"></i>
+                </a>
+            </nav>
+
+            <div class="rodape-copy">
+                <p>© 2026 • Desenvolvido por Kildare</p>
+            </div>
+
+        </footer>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/words.js"></script>
+    <script src="js/score.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
